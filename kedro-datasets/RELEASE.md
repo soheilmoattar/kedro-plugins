@@ -3,6 +3,7 @@
 ## Major features and improvements:
 * Added pandas 2.0 support.
 * Added SQLAlchemy 2.0 support (and dropped support for versions below 1.4).
+* Added `polars.GenericDataSet`, a `GenericDataSet` backed by [polars](https://www.pola.rs/), a lighting fast dataframe package built entirely using Rust.
 
 ## Bug fixes and other changes
 * Relaxed `delta-spark` upper bound to allow compatibility with Spark 3.1.x and 3.2.x.
@@ -28,8 +29,6 @@
 
 * Added the following new datasets:
 
-| Type                                 | Description                                                                | Location                      |
-| ------------------------------------ | -------------------------------------------------------------------------- | ----------------------------- |
 | `polars.CSVDataSet` | A `CSVDataSet` backed by [polars](https://www.pola.rs/), a lighting fast dataframe package built entirely using Rust. | `kedro_datasets.polars` |
 | `snowflake.SnowparkTableDataSet` | Work with [Snowpark](https://www.snowflake.com/en/data-cloud/snowpark/) DataFrames from tables in Snowflake. | `kedro_datasets.snowflake` |
 
@@ -47,7 +46,7 @@
 # Release 1.0.1:
 
 ## Bug fixes and other changes
-* Fixed docstring formatting in `VideoDataSet` that was causing the documentation builds to fail.
+* Fixed doc string formatting in `VideoDataSet` causing the documentation builds to fail.
 
 
 # Release 1.0.0:
