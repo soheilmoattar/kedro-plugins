@@ -29,12 +29,15 @@
 
 * Added the following new datasets:
 
+| Type                                 | Description                                                                | Location                      |
+| ------------------------------------ | -------------------------------------------------------------------------- | ----------------------------- |
 | `polars.CSVDataSet` | A `CSVDataSet` backed by [polars](https://www.pola.rs/), a lighting fast dataframe package built entirely using Rust. | `kedro_datasets.polars` |
 | `snowflake.SnowparkTableDataSet` | Work with [Snowpark](https://www.snowflake.com/en/data-cloud/snowpark/) DataFrames from tables in Snowflake. | `kedro_datasets.snowflake` |
 
 ## Bug fixes and other changes
 * Add `mssql` backend to the `SQLQueryDataSet` DataSet using `pyodbc` library.
 * Added a warning when the user tries to use `SparkDataSet` on Databricks without specifying a file path with the `/dbfs/` prefix.
+* Fixed outdated links to the dill package documentation
 
 # Release 1.0.2:
 
