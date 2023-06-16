@@ -2,6 +2,7 @@
 * Added support for Python 3.11
 * Added the `--all` CLI argument to `kedro-airflow` to convert registered all pipelines at once.
 * Simplify the output of the `kedro airflow create` command.
+* Option to group MemoryDataSets in the same Airflow task (breaking change for custom template via `--jinja-file`).
 
 ## Community contributions
 Many thanks to the following Kedroids for contributing PRs to this release:
