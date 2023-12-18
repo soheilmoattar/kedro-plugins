@@ -171,9 +171,9 @@ def create(  # noqa: PLR0913
 
         # Obtain the file name
         dag_filename = dags_folder / (
-            f"{package_name}_dag.py"
+            f"{package_name}_{env}_dag.py"
             if name == "__default__"
-            else f"{package_name}_{name}_dag.py"
+            else f"{package_name}_{name}_{env}_dag.py"
         )
 
         # group memory nodes
