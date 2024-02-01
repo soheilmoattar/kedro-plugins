@@ -1,4 +1,5 @@
 """ Kedro plugin for running a project with Airflow """
+
 from __future__ import annotations
 
 from collections import defaultdict
@@ -38,7 +39,7 @@ def airflow_commands():
 
 
 def _load_airflow_config(context: KedroContext) -> dict[str, Any]:
-      # Backwards compatibility for ConfigLoader that does not support `config_patterns`
+    # Backwards compatibility for ConfigLoader that does not support `config_patterns`
     config_loader = context.config_loader
     if not hasattr(config_loader, "config_patterns"):
         return config_loader.get("airflow*", "airflow/**")
@@ -60,7 +61,7 @@ def _load_airflow_config(context: KedroContext) -> dict[str, Any]:
 
 
 def _load_spark_config(context: KedroContext) -> dict[str, Any]:
-      # Backwards compatibility for ConfigLoader that does not support `config_patterns`
+    # Backwards compatibility for ConfigLoader that does not support `config_patterns`
     config_loader = context.config_loader
     if not hasattr(config_loader, "config_patterns"):
         return config_loader.get("spark*", "spark/**")
@@ -79,6 +80,7 @@ def _load_spark_config(context: KedroContext) -> dict[str, Any]:
     except MissingConfigException:
         # File does not exist
         return {}
+
 
 def _get_pipeline_config(config_airflow: dict, params: dict, pipeline_name: str):
     dag_config = {}
@@ -160,7 +162,7 @@ def create(  # noqa: PLR0913
     with KedroSession.create(project_path=project_path, env=env) as session:
         context = session.load_context()
         config_airflow = _load_airflow_config(context)
-        spark_config= _load_spark_config(context)
+        spark_config = _load_spark_config(context)
 
     jinja_file = Path(jinja_file).resolve()
     loader = jinja2.FileSystemLoader(jinja_file.parent)
