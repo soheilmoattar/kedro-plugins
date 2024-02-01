@@ -62,7 +62,6 @@ def _load_airflow_config(context: KedroContext) -> dict[str, Any]:
 
 def _load_spark_config(context: KedroContext) -> dict[str, Any]:
     # Backwards compatibility for ConfigLoader that does not support `config_patterns`
-    return {"spark.driver.cores": "2"}
     config_loader = context.config_loader
     if not hasattr(config_loader, "config_patterns"):
         return config_loader.get("spark*", "spark/**")
