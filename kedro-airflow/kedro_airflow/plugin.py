@@ -210,7 +210,7 @@ def create(  # noqa: PLR0913
             for node, parent_nodes in pipeline.node_dependencies.items():
                 for parent in parent_nodes:
                     dependencies[parent.name].append(node.name)
-
+        print(f"spark_config:{}")
         template.stream(
             dag_name=package_name,
             nodes=nodes,
