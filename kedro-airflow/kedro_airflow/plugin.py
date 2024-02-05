@@ -9,7 +9,7 @@ from typing import Any
 import click
 import jinja2
 from click import secho
-from kedro.config import MissingConfigException
+from kedro.config import ConfigLoader, MissingConfigException
 from kedro.framework.cli.project import PARAMS_ARG_HELP
 from kedro.framework.cli.utils import ENV_HELP, KedroCliError, _split_params
 from kedro.framework.context import KedroContext
@@ -60,11 +60,11 @@ def _load_airflow_config(context: KedroContext) -> dict[str, Any]:
         return {}
 
 
-def _load_spark_config(context: KedroContext) -> dict[str, Any]:
+def _load_config(context: KedroContext) -> ConfigLoader:
     # Backwards compatibility for ConfigLoader that does not support `config_patterns`
     config_loader = context.config_loader
     if not hasattr(config_loader, "config_patterns"):
-        return config_loader.get("spark*", "spark/**")
+        return config_loader
 
     # Set the default pattern for `spark` if not provided in `settings.py`
     if "spark" not in context.config_loader.config_patterns.keys():
@@ -76,7 +76,7 @@ def _load_spark_config(context: KedroContext) -> dict[str, Any]:
 
     # Load the config
     try:
-        return context.config_loader["spark"]
+        return context.config_loader
     except MissingConfigException:
         # File does not exist
         return {}
@@ -162,7 +162,7 @@ def create(  # noqa: PLR0913
     with KedroSession.create(project_path=project_path, env=env) as session:
         context = session.load_context()
         config_airflow = _load_airflow_config(context)
-        spark_config = _load_spark_config(context)
+        all_configs = _load_config(context)
 
     jinja_file = Path(jinja_file).resolve()
     loader = jinja2.FileSystemLoader(jinja_file.parent)
@@ -210,7 +210,7 @@ def create(  # noqa: PLR0913
             for node, parent_nodes in pipeline.node_dependencies.items():
                 for parent in parent_nodes:
                     dependencies[parent.name].append(node.name)
-        
+
         template.stream(
             dag_name=package_name,
             nodes=nodes,
@@ -219,7 +219,7 @@ def create(  # noqa: PLR0913
             pipeline_name=name,
             package_name=package_name,
             pipeline=pipeline,
-            config=spark_config,
+            config=all_configs,
             **dag_config,
         ).dump(str(dag_filename))
 
