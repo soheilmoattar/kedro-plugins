@@ -66,14 +66,6 @@ def _load_config(context: KedroContext) -> ConfigLoader:
     if not hasattr(config_loader, "config_patterns"):
         return config_loader
 
-    # Set the default pattern for `spark` if not provided in `settings.py`
-    if "spark" not in context.config_loader.config_patterns.keys():
-        context.config_loader.config_patterns.update(  # pragma: no cover
-            {"spark": ["spark*", "spark/**"]}
-        )
-
-    assert "spark" in context.config_loader.config_patterns.keys()
-
     # Load the config
     try:
         return context.config_loader
