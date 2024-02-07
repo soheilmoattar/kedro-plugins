@@ -9,7 +9,7 @@ from typing import Any
 import click
 import jinja2
 from click import secho
-from kedro.config import ConfigLoader, MissingConfigException
+from kedro.config import MissingConfigException
 from kedro.framework.cli.project import PARAMS_ARG_HELP
 from kedro.framework.cli.utils import ENV_HELP, KedroCliError, _split_params
 from kedro.framework.context import KedroContext
@@ -60,7 +60,7 @@ def _load_airflow_config(context: KedroContext) -> dict[str, Any]:
         return {}
 
 
-def _load_config(context: KedroContext) -> ConfigLoader:
+def _load_config(context: KedroContext):
     # Backwards compatibility for ConfigLoader that does not support `config_patterns`
     config_loader = context.config_loader
     if not hasattr(config_loader, "config_patterns"):
