@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from collections import defaultdict
 
-from kedro.io import DataCatalog, MemoryDataSet
+from kedro.io import DataCatalog, MemoryDataset
 from kedro.pipeline.node import Node
 from kedro.pipeline.pipeline import Pipeline
 
@@ -11,15 +11,15 @@ def _is_memory_dataset(catalog, dataset_name: str) -> bool:
     if dataset_name == "parameters" or dataset_name.startswith("params:"):
         return False
 
-    dataset = catalog._data_sets.get(dataset_name, None)
-    return dataset is not None and isinstance(dataset, MemoryDataSet)
+    dataset = catalog._datasets.get(dataset_name, None)
+    return dataset is not None and isinstance(dataset, MemoryDataset)
 
 
 def get_memory_datasets(catalog: DataCatalog, pipeline: Pipeline) -> set[str]:
-    """Gather all datasets in the pipeline that are of type MemoryDataSet, excluding 'parameters'."""
+    """Gather all datasets in the pipeline that are of type MemoryDataset, excluding 'parameters'."""
     return {
         dataset_name
-        for dataset_name in pipeline.data_sets()
+        for dataset_name in pipeline.datasets()
         if _is_memory_dataset(catalog, dataset_name)
     }
 
